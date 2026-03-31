@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSHS-CRC | Hazard Monitor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="header-left">
+        <button class="menu-btn" onclick="toggleNav()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="logo-area">
+            <span class="school-name">PSHS-CRC</span>
+            <span class="app-name">Hazard Monitor</span>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="status-chip">
+            <span class="dot pulse"></span>
+            Live System
+        </div>
+    </div>
+</header>
+
+<div class="datetime-bar">
+    <div class="location">Butuan City, PH</div>
+    <div class="current-date" id="current-date">Loading...</div>
+    <div class="current-time" id="clock">00:00:00</div>
+</div>
+
+<nav id="mySidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <div class="sidebar-top">
+            <div class="brand-sub">Campus Intelligence Unit</div>
+        </div>
+        
+        <ul class="nav-menu">
+            <li><a href="#" class="nav-link active" onclick="showSection('map')">Dashboard</a></li>
+            <li><a href="#" class="nav-link" onclick="showSection('stats')">Hazard Analytics</a></li>
+            <li><a href="#" class="nav-link" onclick="showSection('emergency')">Protocols</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <p>© 2026 PSHS-CRC Research</p>
+        </div>
+    </div>
+</nav>
+
+<main id="main-content">
+    <section id="map" class="content-section active">
+        <div class="card map-card">
+            <div class="card-header">
+                <h3>Campus Hazard Overlay</h3>
+                <button class="refresh-btn">⟳</button>
+            </div>
+            <div class="map-view">
+                <img src="your-map-image.png" alt="Campus Map" class="placeholder-img">
+                <p class="placeholder-text">Select a sector to view atmospheric data.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="stats" class="content-section"></section>
+    <section id="emergency" class="content-section"></section>
+</main>
+
+<script>
+    function toggleNav() {
+        document.getElementById("mySidebar").classList.toggle("open");
+    }
+
+    function showSection(id) {
+        document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(id);
+        if(target) target.classList.add('active');
+        
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        
+        // Auto-close sidebar on mobile after selection
+        if(window.innerWidth < 768) toggleNav();
+    }
+
+    function updateDateTime() {
+        const now = new Date();
+        const dateOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        
+        document.getElementById('current-date').innerText = now.toLocaleDateString('en-US', dateOptions);
+        document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', timeOptions);
+    }
+
+    setInterval(updateDateTime, 1000);
+    updateDateTime();
+</script>
+
+</body>
+</html>
