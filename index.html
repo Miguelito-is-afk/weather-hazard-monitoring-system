@@ -5,16 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PSHS-CRC | Hazard Monitor</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header class="main-header">
     <div class="header-left">
         <button class="menu-btn" onclick="toggleNav()">
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span>
         </button>
         <div class="logo-area">
             <span class="school-name">PSHS-CRC</span>
@@ -24,68 +22,162 @@
     <div class="header-right">
         <div class="status-chip">
             <span class="dot pulse"></span>
-            Live System
+            SYSTEM OPERATIONAL
         </div>
     </div>
 </header>
 
 <div class="datetime-bar">
-    <div class="location">Butuan City, PH</div>
+    <div class="location">📍 Butuan City, Philippines</div>
     <div class="current-date" id="current-date">Loading...</div>
     <div class="current-time" id="clock">00:00:00</div>
 </div>
 
 <nav id="mySidebar" class="sidebar">
     <div class="sidebar-inner">
-        <div class="sidebar-top">
-            <div class="brand-sub">Campus Intelligence Unit</div>
-        </div>
-        
+        <div class="brand-sub">Research Prototype</div>
         <ul class="nav-menu">
-            <li><a href="#" class="nav-link active" onclick="showSection('map')">Dashboard</a></li>
-            <li><a href="#" class="nav-link" onclick="showSection('stats')">Hazard Analytics</a></li>
-            <li><a href="#" class="nav-link" onclick="showSection('emergency')">Protocols</a></li>
+            <li><a href="#" class="nav-link active" onclick="showSection(event, 'map')">Dashboard</a></li>
+            <li><a href="#" class="nav-link" onclick="showSection(event, 'stats')">Hazard Analytics</a></li>
+            <li><a href="#" class="nav-link" onclick="showSection(event, 'emergency')">Safety Protocols</a></li>
         </ul>
-
         <div class="sidebar-footer">
-            <p>© 2026 PSHS-CRC Research</p>
+            <p><strong>SMS Gateway:</strong> <span class="text-success">ACTIVE</span></p>
+            <p style="margin-top: 8px;">© 2026 Bernados, Dangate, & Go</p>
         </div>
     </div>
 </nav>
 
 <main id="main-content">
     <section id="map" class="content-section active">
-        <div class="card map-card">
+        <div class="stats-grid">
+            <div class="mini-card">
+                <span class="label">Macro-Scale (PAGASA)</span>
+                <span class="value">31°C</span>
+            </div>
+            <div class="mini-card micro-border">
+                <span class="label">Micro-Scale (Campus)</span>
+                <span class="value">4 Active Reports</span>
+            </div>
+            <div class="mini-card">
+                <span class="label">Confidence Score</span>
+                <span class="value">94.2%</span>
+            </div>
+        </div>
+
+        <div class="card">
             <div class="card-header">
-                <h3>Campus Hazard Overlay</h3>
-                <button class="refresh-btn">⟳</button>
+                <h3>Campus Spatial Overlay</h3>
+                <span class="badge danger">2 Localized Hazards</span>
             </div>
             <div class="map-view">
-                <img src="your-map-image.png" alt="Campus Map" class="placeholder-img">
-                <p class="placeholder-text">Select a sector to view atmospheric data.</p>
+                <div class="mock-map">
+                   <div class="hazard-pin pin-danger" style="top:35%; left:55%;" title="Flood Alert">!</div>
+                   <div class="hazard-pin pin-warning" style="top:60%; left:30%;" title="Wind Alert">!</div>
+                   <p class="map-placeholder-text">Localized Campus Map Alpha v1.0</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="stats" class="content-section"></section>
-    <section id="emergency" class="content-section"></section>
+    <section id="stats" class="content-section">
+        <div class="card">
+            <div class="card-header"><h3>Reporting Frequency (Weekly Trend)</h3></div>
+            <div class="analytics-body">
+                <div class="chart-container">
+                    <div class="bar-wrapper"><div class="bar" style="height: 40%"></div><span class="bar-label">Mon</span></div>
+                    <div class="bar-wrapper"><div class="bar" style="height: 70%"></div><span class="bar-label">Tue</span></div>
+                    <div class="bar-wrapper"><div class="bar" style="height: 95%; background: var(--danger);"></div><span class="bar-label">Wed</span></div>
+                    <div class="bar-wrapper"><div class="bar" style="height: 60%"></div><span class="bar-label">Thu</span></div>
+                    <div class="bar-wrapper"><div class="bar" style="height: 30%"></div><span class="bar-label">Fri</span></div>
+                </div>
+                <div class="analytics-grid">
+                    <div class="mini-card">
+                        <span class="label">Most Frequent Hazard</span>
+                        <p class="stat-highlight">Flooding (Academic Building 2)</p>
+                    </div>
+                    <div class="mini-card">
+                        <span class="label">Average System Latency</span>
+                        <p class="stat-highlight">0.8 Seconds</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="emergency" class="content-section">
+        <div class="protocol-list">
+            <div class="protocol-card critical">
+                <h4>⚠️ Academic Building 2: Elevated Flood Risk</h4>
+                <p>Localized rainfall detected. Please avoid the hallway near Computer Lab 4 due to increased slip and flood hazards. Use alternative routes when moving through the building.</p>
+            </div>
+            <div class="protocol-card warning">
+                <h4>💨 Campus-wide: High Wind Velocity</h4>
+                <p>Orange Rainfall Warning in effect. All outdoor PE activities are moved to the Gymnasium.</p>
+            </div>
+        </div>
+    </section>
 </main>
+
+<button class="fab" onclick="openReport()" title="Submit Report">+</button>
+
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <h3>New Local Hazard Report</h3>
+        <div class="form-group">
+            <label>Hazard Type</label>
+            <select id="hazardType">
+                <option>Flooding / Deep Puddles</option>
+                <option>Slippery Surface</option>
+                <option>Strong Winds / Debris</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Specific Location</label>
+            <input type="text" id="reportLoc" placeholder="e.g., Academic Building 1, Gymnasium">
+        </div>
+        <p class="modal-hint">
+            <strong>Community Sourced Input:</strong> Data will be cross-referenced with weather APIs before broadcasting.
+        </p>
+        <button class="submit-btn" onclick="submitReport()">Finalize Report</button>
+        <button class="cancel-btn" onclick="closeReport()">Cancel</button>
+    </div>
+</div>
 
 <script>
     function toggleNav() {
         document.getElementById("mySidebar").classList.toggle("open");
     }
 
-    function showSection(id) {
+    function showSection(e, id) {
+        // Prevent default link behavior
+        if(e) e.preventDefault();
+
+        // Update active section
         document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-        const target = document.getElementById(id);
-        if(target) target.classList.add('active');
+        document.getElementById(id).classList.add('active');
         
+        // Update active nav link
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        if(e) e.currentTarget.classList.add('active');
         
-        // Auto-close sidebar on mobile after selection
-        if(window.innerWidth < 768) toggleNav();
+        // Auto-close sidebar on mobile
+        if(window.innerWidth < 768) {
+            document.getElementById("mySidebar").classList.remove("open");
+        }
+    }
+
+    function openReport() { document.getElementById('reportModal').style.display = 'flex'; }
+    function closeReport() { document.getElementById('reportModal').style.display = 'none'; }
+
+    function submitReport() {
+        const loc = document.getElementById('reportLoc').value;
+        if(loc) {
+            alert(`Community Report for ${loc} logged. Processing for spatial visualization...`);
+            closeReport();
+        } else {
+            alert("Please specify a location.");
+        }
     }
 
     function updateDateTime() {
